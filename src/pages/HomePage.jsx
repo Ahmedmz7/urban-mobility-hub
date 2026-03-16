@@ -13,6 +13,7 @@ import {
   MdDashboard,
   MdEco,
   MdArrowForward,
+  MdNotifications,
 } from 'react-icons/md'
 
 // 3. Styles
@@ -20,52 +21,58 @@ import styles from './HomePage.module.css'
 
 const TOOLS = [
   {
-    to:    '/travel-modes',
-    icon:  MdDirectionsBus,
-    name:  'Travel Modes',
-    desc:  'Compare bus, rail, cycling, and walking — costs, times, environmental impact.',
+    to:   '/travel-modes',
+    icon: MdDirectionsBus,
+    name: 'Travel Modes',
+    desc: 'Compare bus, rail, cycling, and walking — costs, times, impact.',
   },
   {
-    to:    '/fare-estimator',
-    icon:  MdCalculate,
-    name:  'Fare Estimator',
-    desc:  'Input distance and mode, get an instant estimated cost range.',
+    to:   '/fare-estimator',
+    icon: MdCalculate,
+    name: 'Fare Estimator',
+    desc: 'Enter distance and mode to get an instant estimated cost range.',
   },
   {
-    to:    '/service-updates',
-    icon:  MdWarning,
-    name:  'Live Service Updates',
-    desc:  'Real-time disruption notices and delays across TfL lines.',
+    to:   '/service-updates',
+    icon: MdWarning,
+    name: 'Live Service Updates',
+    desc: 'Real-time disruptions, delays, and closures across TfL lines.',
   },
   {
-    to:    '/journey-planner',
-    icon:  MdMap,
-    name:  'Journey Planner',
-    desc:  'Step-by-step routes between any two locations with live data.',
+    to:   '/journey-planner',
+    icon: MdMap,
+    name: 'Journey Planner',
+    desc: 'Step-by-step routes between any two locations with live data.',
   },
   {
-    to:    '/nearby-stops',
-    icon:  MdNearMe,
-    name:  'Nearby Stops',
-    desc:  'Find the closest stations and stops to your current location.',
+    to:   '/nearby-stops',
+    icon: MdNearMe,
+    name: 'Nearby Stops',
+    desc: 'Find the closest stations and stops to your current location.',
   },
   {
-    to:    '/shared-mobility',
-    icon:  MdDirectionsBike,
-    name:  'Bike Hire',
-    desc:  'Live Santander Cycles dock availability across the city.',
+    to:   '/shared-mobility',
+    icon: MdDirectionsBike,
+    name: 'Bike Hire',
+    desc: 'Live Santander Cycles dock availability across the city.',
   },
   {
-    to:    '/dashboard',
-    icon:  MdDashboard,
-    name:  'My Dashboard',
-    desc:  'Save favourite journeys and preferred modes for quick access.',
+    to:   '/dashboard',
+    icon: MdDashboard,
+    name: 'My Dashboard',
+    desc: 'Save favourite journeys and modes for quick access.',
   },
   {
-    to:    '/sustainability',
-    icon:  MdEco,
-    name:  'Sustainability',
-    desc:  'Carbon footprint comparison and weekly travel goal tracking.',
+    to:   '/alerts',
+    icon: MdNotifications,
+    name: 'Travel Alerts',
+    desc: 'Set custom alerts for your regular routes and service lines.',
+  },
+  {
+    to:   '/sustainability',
+    icon: MdEco,
+    name: 'Sustainability',
+    desc: 'Carbon footprint comparison and weekly travel goal tracking.',
   },
 ]
 
@@ -84,13 +91,13 @@ const TIPS = [
   },
   {
     title: 'Contactless caps your daily spend',
-    text:  'Pay-as-you-go with Oyster or contactless card applies a daily cap — often less than a day travelcard.',
+    text:  'Pay-as-you-go with Oyster or contactless applies a daily cap — often cheaper than a travelcard.',
   },
 ]
 
 /**
- * HomePage — static landing page with hero, tools list,
- * journey planning guidance, and travel tips.
+ * HomePage — static landing page with orange-accented hero,
+ * dark stats bar, tools grid, and travel tips.
  */
 function HomePage() {
   return (
@@ -99,27 +106,39 @@ function HomePage() {
       {/* ── Hero ── */}
       <section className={styles.hero} aria-labelledby="hero-heading">
         <div className="container">
-          <p className={styles.heroLabel} aria-hidden="true">Urban Mobility Hub</p>
-          <h1 id="hero-heading" className={styles.heroHeading}>
-            Plan your city journeys with confidence
-          </h1>
-          <p className={styles.heroDesc}>
-            Live service data, fare estimates, journey planning, and
-            sustainability tools — all in one place.
-          </p>
-          <div className={styles.heroActions}>
-            <Link to="/journey-planner" className={styles.btnMain}>
-              Plan a journey
-            </Link>
-            <Link to="/travel-modes" className={styles.btnGhost}>
-              Compare travel modes
-              <MdArrowForward className={styles.heroArrow} aria-hidden="true" />
-            </Link>
+          <div className={styles.heroInner}>
+
+            <div className={styles.heroEyebrow}>
+              <span className={styles.heroDot} aria-hidden="true" />
+              <span className={styles.heroEyebrowText}>London urban transport</span>
+            </div>
+
+            <h1 id="hero-heading" className={styles.heroHeading}>
+              Plan smarter journeys{' '}
+              <span className={styles.heroHeadingAccent}>across the city</span>
+            </h1>
+
+            <p className={styles.heroDesc}>
+              Live service data, fare estimates, journey planning, and
+              sustainability tools — all in one place.
+            </p>
+
+            <div className={styles.heroActions}>
+              <Link to="/journey-planner" className={styles.btnOrange}>
+                <MdMap aria-hidden="true" />
+                Plan a journey
+              </Link>
+              <Link to="/travel-modes" className={styles.btnGhost}>
+                Compare travel modes
+                <MdArrowForward className={styles.btnGhostArrow} aria-hidden="true" />
+              </Link>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ── Stats bar ── */}
+      {/* ── Stats bar (dark) ── */}
       <div className={styles.statsBar} role="region" aria-label="Key facts">
         <div className="container" style={{ padding: 0 }}>
           <dl className={styles.statsInner}>
@@ -132,7 +151,7 @@ function HomePage() {
               <dd className={styles.statValue}>13+</dd>
             </div>
             <div className={styles.statItem}>
-              <dt className={styles.statLabel}>Bike hire docks tracked</dt>
+              <dt className={styles.statLabel}>Bike docks tracked</dt>
               <dd className={styles.statValue}>800+</dd>
             </div>
             <div className={styles.statItem}>
@@ -144,10 +163,10 @@ function HomePage() {
       </div>
 
       {/* ── Tools ── */}
-      <section className={styles.tools} aria-labelledby="tools-heading">
+      <section className={styles.section} aria-labelledby="tools-heading">
         <div className="container">
-          <header className={styles.toolsHeader}>
-            <p className={styles.sectionEyebrow}>What's available</p>
+          <header className={styles.sectionHeader}>
+            <p className={styles.eyebrow}>What&apos;s available</p>
             <h2 id="tools-heading" className={styles.sectionTitle}>Everything you need</h2>
           </header>
 
@@ -175,7 +194,7 @@ function HomePage() {
       </section>
 
       {/* ── Travel guidance ── */}
-      <section className={styles.guidance} aria-labelledby="tips-heading">
+      <section className={styles.sectionAlt} aria-labelledby="tips-heading">
         <div className="container">
           <div className={styles.guidanceLayout}>
 
@@ -184,8 +203,8 @@ function HomePage() {
                 Tips for smarter urban travel
               </h2>
               <p className={styles.guidanceSideDesc}>
-                Simple, practical advice for everyday journeys around the city.
-                No jargon — just what actually helps.
+                Simple, practical advice for everyday journeys. No jargon — just
+                what actually helps.
               </p>
               <Link to="/travel-modes" className={styles.guidanceSideLink}>
                 View all travel modes
@@ -219,11 +238,9 @@ function HomePage() {
               <h2 id="cta-heading" className={styles.ctaTitle}>
                 Ready to check live service status?
               </h2>
-              <p className={styles.ctaSubtext}>
-                Updated in real time from TfL Open Data.
-              </p>
+              <p className={styles.ctaSubtext}>Updated in real time from TfL Open Data.</p>
             </div>
-            <Link to="/service-updates" className={styles.ctaBtn}>
+            <Link to="/service-updates" className={styles.btnOrange}>
               View live updates
               <MdArrowForward aria-hidden="true" />
             </Link>

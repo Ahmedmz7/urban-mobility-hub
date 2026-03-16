@@ -1,5 +1,6 @@
 /* ============================================================
-   Navbar.module.css — Top navigation bar styles
+   Navbar.module.css
+   Dark slate base, orange active/hover accent
    ============================================================ */
 
 .navbar {
@@ -9,9 +10,8 @@
   right: 0;
   z-index: 100;
   height: var(--navbar-height);
-  background-color: var(--color-primary);
-  border-bottom: 1px solid rgb(255 255 255 / 0.08);
-  box-shadow: var(--shadow-md);
+  background-color: var(--color-base);
+  border-bottom: 1px solid var(--color-base-border);
 }
 
 .inner {
@@ -22,31 +22,32 @@
   gap: var(--space-4);
 }
 
-/* --- Logo --- */
+/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.logoIcon {
+.logoMark {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: var(--color-secondary);
+  width: 34px;
+  height: 34px;
+  background-color: var(--color-accent);
   border-radius: var(--radius-sm);
-  color: var(--color-text-inverse);
-  font-size: var(--text-xl);
+  color: #fff;
+  font-size: var(--text-lg);
+  flex-shrink: 0;
 }
 
 .logoText {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .logoName {
@@ -58,18 +59,18 @@
 }
 
 .logoSub {
-  font-size: 0.65rem;
+  font-size: 0.625rem;
   font-weight: var(--font-weight-medium);
-  color: rgb(255 255 255 / 0.55);
-  letter-spacing: 0.04em;
+  color: rgb(255 255 255 / 0.35);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-/* --- Desktop nav links --- */
+/* ── Desktop links ── */
 .navLinks {
   display: none;
   align-items: center;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 @media (min-width: 768px) {
@@ -82,11 +83,11 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  color: rgb(255 255 255 / 0.75);
+  color: rgb(255 255 255 / 0.55);
   text-decoration: none;
   border-radius: var(--radius-md);
   transition: color var(--transition-fast), background-color var(--transition-fast);
@@ -95,54 +96,50 @@
 
 .navLink:hover {
   color: var(--color-text-inverse);
-  background-color: rgb(255 255 255 / 0.08);
+  background-color: rgb(255 255 255 / 0.06);
 }
 
 .navLinkActive {
-  color: var(--color-text-inverse);
-  background-color: rgb(255 255 255 / 0.12);
+  color: var(--color-accent) !important;
+  background-color: var(--color-accent-subtle) !important;
 }
 
 .navLinkActive::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 4px;
   left: var(--space-3);
   right: var(--space-3);
   height: 2px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-accent);
   border-radius: var(--radius-full);
 }
 
-/* --- Tier badge --- */
-.badge {
+/* live dot badge */
+.live {
   display: inline-block;
-  padding: 1px 5px;
-  font-size: 0.6rem;
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border-radius: var(--radius-full);
-  background-color: var(--color-secondary);
-  color: var(--color-text-inverse);
-  vertical-align: middle;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
 }
 
-/* --- Mobile hamburger --- */
+/* ── Mobile hamburger ── */
 .menuButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: var(--radius-md);
-  color: rgb(255 255 255 / 0.85);
+  color: rgb(255 255 255 / 0.6);
   font-size: var(--text-xl);
   transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .menuButton:hover {
-  background-color: rgb(255 255 255 / 0.1);
+  background-color: rgb(255 255 255 / 0.07);
   color: var(--color-text-inverse);
 }
 
@@ -152,20 +149,20 @@
   }
 }
 
-/* --- Mobile drawer --- */
+/* ── Mobile drawer ── */
 .mobileMenu {
   position: fixed;
   top: var(--navbar-height);
   left: 0;
   right: 0;
-  background-color: var(--color-primary);
-  border-bottom: 1px solid rgb(255 255 255 / 0.08);
-  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-base-raised);
+  border-bottom: 1px solid var(--color-base-border);
+  padding: var(--space-3) var(--space-4) var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  box-shadow: var(--shadow-lg);
+  gap: 2px;
   z-index: 99;
+  box-shadow: var(--shadow-lg);
 }
 
 @media (min-width: 768px) {
@@ -174,31 +171,41 @@
   }
 }
 
-.mobileNavLink {
+.mobileLink {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-3);
+  padding: var(--space-3);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  color: rgb(255 255 255 / 0.75);
+  color: rgb(255 255 255 / 0.55);
   text-decoration: none;
   border-radius: var(--radius-md);
   transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.mobileNavLink:hover {
+.mobileLink:hover {
   color: var(--color-text-inverse);
-  background-color: rgb(255 255 255 / 0.08);
+  background-color: rgb(255 255 255 / 0.06);
 }
 
-.mobileNavLinkActive {
-  color: var(--color-text-inverse);
-  background-color: rgb(255 255 255 / 0.12);
-  border-left: 3px solid var(--color-secondary);
+.mobileLinkActive {
+  color: var(--color-accent) !important;
+  background-color: var(--color-accent-subtle) !important;
 }
 
-.mobileNavLinkIcon {
+.mobileLinkIcon {
   font-size: var(--text-base);
-  opacity: 0.8;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.mobileLinkActive .mobileLinkIcon {
+  opacity: 1;
+}
+
+.mobileDivider {
+  height: 1px;
+  background-color: var(--color-base-border);
+  margin: var(--space-2) 0;
 }
