@@ -1,0 +1,204 @@
+/* ============================================================
+   Navbar.module.css — Top navigation bar styles
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  background-color: var(--color-primary);
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow: var(--shadow-md);
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* --- Logo --- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xl);
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoName {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-inverse);
+  letter-spacing: -0.01em;
+}
+
+.logoSub {
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 0.55);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --- Desktop nav links --- */
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    display: flex;
+  }
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 0.75);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--color-text-inverse);
+  background-color: rgb(255 255 255 / 0.08);
+}
+
+.navLinkActive {
+  color: var(--color-text-inverse);
+  background-color: rgb(255 255 255 / 0.12);
+}
+
+.navLinkActive::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: var(--space-3);
+  right: var(--space-3);
+  height: 2px;
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-full);
+}
+
+/* --- Tier badge --- */
+.badge {
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 0.6rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary);
+  color: var(--color-text-inverse);
+  vertical-align: middle;
+}
+
+/* --- Mobile hamburger --- */
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  color: rgb(255 255 255 / 0.85);
+  font-size: var(--text-xl);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menuButton:hover {
+  background-color: rgb(255 255 255 / 0.1);
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+/* --- Mobile drawer --- */
+.mobileMenu {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  background-color: var(--color-primary);
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  box-shadow: var(--shadow-lg);
+  z-index: 99;
+}
+
+@media (min-width: 768px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 0.75);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.mobileNavLink:hover {
+  color: var(--color-text-inverse);
+  background-color: rgb(255 255 255 / 0.08);
+}
+
+.mobileNavLinkActive {
+  color: var(--color-text-inverse);
+  background-color: rgb(255 255 255 / 0.12);
+  border-left: 3px solid var(--color-secondary);
+}
+
+.mobileNavLinkIcon {
+  font-size: var(--text-base);
+  opacity: 0.8;
+}
