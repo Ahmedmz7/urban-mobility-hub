@@ -1,0 +1,211 @@
+/* ============================================================
+   Navbar.module.css
+   Dark slate base, orange active/hover accent
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  background-color: var(--color-base);
+  border-bottom: 1px solid var(--color-base-border);
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* ── Logo ── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: var(--text-lg);
+  flex-shrink: 0;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.logoName {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-inverse);
+  letter-spacing: -0.01em;
+}
+
+.logoSub {
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 0.35);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Desktop links ── */
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: 2px;
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    display: flex;
+  }
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 0.55);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--color-text-inverse);
+  background-color: rgb(255 255 255 / 0.06);
+}
+
+.navLinkActive {
+  color: var(--color-accent) !important;
+  background-color: var(--color-accent-subtle) !important;
+}
+
+.navLinkActive::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: var(--space-3);
+  right: var(--space-3);
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+/* live dot badge */
+.live {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* ── Mobile hamburger ── */
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  color: rgb(255 255 255 / 0.6);
+  font-size: var(--text-xl);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menuButton:hover {
+  background-color: rgb(255 255 255 / 0.07);
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+/* ── Mobile drawer ── */
+.mobileMenu {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  background-color: var(--color-base-raised);
+  border-bottom: 1px solid var(--color-base-border);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 99;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 768px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: rgb(255 255 255 / 0.55);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.mobileLink:hover {
+  color: var(--color-text-inverse);
+  background-color: rgb(255 255 255 / 0.06);
+}
+
+.mobileLinkActive {
+  color: var(--color-accent) !important;
+  background-color: var(--color-accent-subtle) !important;
+}
+
+.mobileLinkIcon {
+  font-size: var(--text-base);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.mobileLinkActive .mobileLinkIcon {
+  opacity: 1;
+}
+
+.mobileDivider {
+  height: 1px;
+  background-color: var(--color-base-border);
+  margin: var(--space-2) 0;
+}
