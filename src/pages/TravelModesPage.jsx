@@ -148,7 +148,7 @@ const MATRIX_ROWS = [
  */
 function TravelModesPage() {
   return (
-    <div className="page-wrapper">
+    <div>
 
       {/* ── Hero ── */}
       <section className={styles.hero} aria-labelledby="page-title">

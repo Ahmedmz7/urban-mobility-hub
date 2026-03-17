@@ -5,9 +5,15 @@
 /* ── Hero ── */
 .hero {
   background-color: var(--color-base);
-  padding: var(--space-20) 0 var(--space-16);
+  padding: var(--space-10) 0 var(--space-8);
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: var(--space-20) 0 var(--space-16);
+  }
 }
 
 /* subtle diagonal stripe texture using repeating-linear-gradient */
