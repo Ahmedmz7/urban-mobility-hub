@@ -52,6 +52,49 @@ export async function getLineStatus() {
 }
 
 /**
+ * Fetches the closest stops/stations to a given coordinate using the TfL StopPoint API.
+ * @param {number} lat - Latitude
+ * @param {number} lon - Longitude
+ * @param {number} [radius=800] - Search radius in metres (max 1500)
+ * @returns {Promise<Array>} Array of stopPoint objects sorted by distance
+ * @throws {Error} If the request fails
+ */
+export async function getNearbyStops(lat, lon, radius = 800) {
+  const UK_BOUNDS = { latMin: 49.9, latMax: 58.7, lonMin: -11.05, lonMax: 1.78 }
+  if (lat < UK_BOUNDS.latMin || lat > UK_BOUNDS.latMax || lon < UK_BOUNDS.lonMin || lon > UK_BOUNDS.lonMax) {
+    throw new Error('Your location appears to be outside London. This app covers TfL services in the UK only.')
+  }
+
+  const stopTypes = [
+    'NaptanMetroStation',
+    'NaptanRailStation',
+    'NaptanPublicBusCoachTram',
+  ].join(',')
+
+  const params = new URLSearchParams({
+    lat,
+    lon,
+    stopTypes,
+    radius,
+    useStopPointHierarchy: 'false',
+    modes: 'tube,overground,elizabeth-line,dlr,national-rail,bus',
+  })
+
+  const appKey = import.meta.env.VITE_TFL_APP_KEY
+  if (appKey) params.set('app_key', appKey)
+
+  const url = `${TFL_BASE_URL}/StopPoint?${params}`
+
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`TfL API error: ${response.status} ${response.statusText}`)
+  }
+
+  const data = await response.json()
+  return data.stopPoints ?? []
+}
+
+/**
  * Plans a journey between two London locations using the TfL Journey Planner API.
  * Accepts station names, postcodes, or "lat,lon" coordinate strings.
  * @param {string} from - Origin location
