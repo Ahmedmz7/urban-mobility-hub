@@ -14,7 +14,7 @@ import styles from './NotFoundPage.module.css'
  */
 function NotFoundPage() {
   return (
-    <main className={styles.page} aria-labelledby="not-found-title">
+    <div className={styles.page} aria-labelledby="not-found-title">
       <div className={`container ${styles.content}`}>
         <span className={styles.icon} aria-hidden="true">
           <MdErrorOutline />
@@ -29,7 +29,7 @@ function NotFoundPage() {
           Back to Home
         </Link>
       </div>
-    </main>
+    </div>
   )
 }
 

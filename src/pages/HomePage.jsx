@@ -140,7 +140,7 @@ function HomePage() {
 
       {/* ── Stats bar (dark) ── */}
       <div className={styles.statsBar} role="region" aria-label="Key facts">
-        <div className="container" style={{ padding: 0 }}>
+        <div className={styles.statsContainer}>
           <dl className={styles.statsInner}>
             <div className={styles.statItem}>
               <dt className={styles.statLabel}>Travel modes covered</dt>
