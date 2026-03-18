@@ -195,6 +195,18 @@ export async function planJourney(from, to) {
   const response = await fetch(url)
 
   if (response.status === 300) {
+    // TfL returns 300 when a location name matches multiple places.
+    // Auto-resolve by picking the first suggestion for each ambiguous end,
+    // then retry once with the resolved IDs.
+    const disambig = await response.json()
+    const resolvedFrom = disambig.fromLocationDisambiguation
+      ?.disambiguationOptions?.[0]?.parameterValue ?? from
+    const resolvedTo = disambig.toLocationDisambiguation
+      ?.disambiguationOptions?.[0]?.parameterValue ?? to
+
+    if (resolvedFrom !== from || resolvedTo !== to) {
+      return planJourney(resolvedFrom, resolvedTo)
+    }
     throw new Error('Location is ambiguous — try a postcode (e.g. SW1A 1AA) or full station name.')
   }
   if (!response.ok) {

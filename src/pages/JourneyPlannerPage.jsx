@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 // 2. Third-party imports
+import { useSearchParams } from 'react-router-dom'
 import {
   MdDirectionsBus,
   MdTrain,
@@ -81,8 +82,9 @@ function formatFare(pence) {
  * legs, durations, fares, and departure/arrival times.
  */
 function JourneyPlannerPage() {
-  const [from, setFrom]         = useState('')
-  const [to, setTo]             = useState('')
+  const [searchParams] = useSearchParams()
+  const [from, setFrom]         = useState(searchParams.get('from') ?? '')
+  const [to, setTo]             = useState(searchParams.get('to') ?? '')
   const [journeys, setJourneys] = useState(null)
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState(null)
