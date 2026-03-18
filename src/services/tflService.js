@@ -2,6 +2,30 @@
 const TFL_BASE_URL = 'https://api.tfl.gov.uk'
 
 /**
+ * Haversine distance between two coordinates in metres.
+ * @param {number} lat1 @param {number} lon1 @param {number} lat2 @param {number} lon2
+ * @returns {number}
+ */
+function haversineMetres(lat1, lon1, lat2, lon2) {
+  const R = 6371000
+  const dLat = (lat2 - lat1) * Math.PI / 180
+  const dLon = (lon2 - lon1) * Math.PI / 180
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+}
+
+/**
+ * Extracts a value from a TfL additionalProperties array by key.
+ * @param {Array} props
+ * @param {string} key
+ * @returns {string}
+ */
+export function getBikePointProp(props, key) {
+  return props?.find(p => p.key === key)?.value ?? '0'
+}
+
+/**
  * Official TfL line brand colours, keyed by TfL line ID.
  * Source: TfL brand guidelines.
  */
@@ -92,6 +116,63 @@ export async function getNearbyStops(lat, lon, radius = 800) {
 
   const data = await response.json()
   return data.stopPoints ?? []
+}
+
+/**
+ * Searches Santander Cycles docking stations by name, with full availability data.
+ * The TfL /BikePoint/Search endpoint omits additionalProperties, so we fetch all
+ * stations from /BikePoint and filter client-side to get live bike counts.
+ * @param {string} query - Station name search term (case-insensitive)
+ * @returns {Promise<Array>} Matching BikePoint objects with full additionalProperties
+ * @throws {Error} If the request fails
+ */
+export async function searchBikePoints(query) {
+  const params = new URLSearchParams()
+  const appKey = import.meta.env.VITE_TFL_APP_KEY
+  if (appKey) params.set('app_key', appKey)
+
+  const response = await fetch(`${TFL_BASE_URL}/BikePoint?${params}`)
+  if (!response.ok) {
+    throw new Error(`TfL API error: ${response.status} ${response.statusText}`)
+  }
+
+  const all = await response.json()
+  const term = query.toLowerCase()
+  return all.filter(station => station.commonName.toLowerCase().includes(term))
+}
+
+/**
+ * Fetches all Santander Cycles stations and returns those within a given radius,
+ * sorted by distance from the supplied coordinates.
+ * @param {number} lat
+ * @param {number} lon
+ * @param {number} [radius=1000] - Search radius in metres
+ * @returns {Promise<Array>} Nearby BikePoint objects with a `distance` property added
+ * @throws {Error} If the request fails or location is outside UK
+ */
+export async function getNearbyBikePoints(lat, lon, radius = 1000) {
+  const UK_BOUNDS = { latMin: 49.9, latMax: 58.7, lonMin: -11.05, lonMax: 1.78 }
+  if (lat < UK_BOUNDS.latMin || lat > UK_BOUNDS.latMax || lon < UK_BOUNDS.lonMin || lon > UK_BOUNDS.lonMax) {
+    throw new Error('Your location appears to be outside London. This app covers TfL services in the UK only.')
+  }
+
+  const params = new URLSearchParams()
+  const appKey = import.meta.env.VITE_TFL_APP_KEY
+  if (appKey) params.set('app_key', appKey)
+
+  const response = await fetch(`${TFL_BASE_URL}/BikePoint?${params}`)
+  if (!response.ok) {
+    throw new Error(`TfL API error: ${response.status} ${response.statusText}`)
+  }
+
+  const all = await response.json()
+  return all
+    .map(station => ({
+      ...station,
+      distance: haversineMetres(lat, lon, station.lat, station.lon),
+    }))
+    .filter(station => station.distance <= radius)
+    .sort((a, b) => a.distance - b.distance)
 }
 
 /**
