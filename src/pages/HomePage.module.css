@@ -5,9 +5,15 @@
 /* ── Hero ── */
 .hero {
   background-color: var(--color-base);
-  padding: var(--space-20) 0 var(--space-16);
+  padding: var(--space-10) 0 var(--space-8);
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: var(--space-20) 0 var(--space-16);
+  }
 }
 
 /* subtle diagonal stripe texture using repeating-linear-gradient */
@@ -38,12 +44,18 @@
   margin-bottom: var(--space-5);
 }
 
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(249 115 22 / 0.6); }
+  50%       { box-shadow: 0 0 0 5px rgb(249 115 22 / 0); }
+}
+
 .heroDot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: var(--color-accent);
   flex-shrink: 0;
+  animation: livePulse 2s ease-in-out infinite;
 }
 
 .heroEyebrowText {
@@ -133,6 +145,13 @@
 .statsBar {
   background-color: var(--color-base-raised);
   border-bottom: 1px solid var(--color-base-border);
+}
+
+.statsContainer {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: 0;
 }
 
 .statsInner {
