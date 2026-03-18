@@ -50,3 +50,39 @@ export async function getLineStatus() {
 
   return response.json()
 }
+
+/**
+ * Plans a journey between two London locations using the TfL Journey Planner API.
+ * Accepts station names, postcodes, or "lat,lon" coordinate strings.
+ * @param {string} from - Origin location
+ * @param {string} to - Destination location
+ * @returns {Promise<Array>} Array of journey option objects
+ * @throws {Error} If the request fails, location is ambiguous, or no journeys found
+ */
+export async function planJourney(from, to) {
+  const params = new URLSearchParams({ nationalSearch: 'false' })
+  const appKey = import.meta.env.VITE_TFL_APP_KEY
+  if (appKey) params.set('app_key', appKey)
+
+  const fromEnc = encodeURIComponent(from.trim())
+  const toEnc   = encodeURIComponent(to.trim())
+  const url = `${TFL_BASE_URL}/Journey/JourneyResults/${fromEnc}/to/${toEnc}?${params}`
+
+  const response = await fetch(url)
+
+  if (response.status === 300) {
+    throw new Error('Location is ambiguous — try a postcode (e.g. SW1A 1AA) or full station name.')
+  }
+  if (!response.ok) {
+    throw new Error(`TfL API error: ${response.status} ${response.statusText}`)
+  }
+
+  const data = await response.json()
+  const journeys = data.journeys ?? []
+
+  if (journeys.length === 0) {
+    throw new Error('No journeys found between those locations. Try different inputs.')
+  }
+
+  return journeys
+}
